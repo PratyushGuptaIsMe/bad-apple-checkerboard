@@ -12,7 +12,7 @@ def get_all_frames():
             res_divider = 60
             for x in range(int(width / res_divider)):
                 for y in range(int(height / res_divider)):
-                    current_frame.append(frame.getpixel((x,y)))
+                    current_frame.append(frame.getpixel((x*res_divider,y*res_divider)))
             all_frames.append(current_frame)
     except FileNotFoundError:
         print("File path not found. Please edit your settings or smth.")
