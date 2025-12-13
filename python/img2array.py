@@ -7,6 +7,9 @@ def get_all_frames():
             i_str = str(i)
             frame_number = (5-len(i_str)) * "0" + i_str
             frame = Image.open(f"../8x8-bad-apple/frame_{frame_number}.png")
+            
+            frame = frame.rotate(90)
+            
             width, height = frame.size
             current_frame = []
             res_divider = 60
