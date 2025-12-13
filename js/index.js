@@ -1,20 +1,16 @@
+
 let RULE = {
-    false: BLACK,
-    true: WHITE
+    false: "BLACK",
+    true: "WHITE"
 }
 
+function check(){
 
-let mainState = [
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-]
+}
 
-mainState[0][1] = true;
+let mainState2 = [
+    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, 
+];
+let frames = [];
 
 console.log(mainState);
