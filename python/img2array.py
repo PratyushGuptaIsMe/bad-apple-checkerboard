@@ -1,5 +1,5 @@
 from PIL import Image
-
+import json
 
 def get_all_frames():
     try:
@@ -32,10 +32,10 @@ def frames_int_to_bool():
 
 
 
-total_frames = 3087 + 1 # offset
+total_frames = 3087 + 1   # offset
 all_frames = []
 
 get_all_frames()
-frames_int_to_bool()
 
-print(all_frames)
+with open("../all_frames.json", "w") as all_frames_file:
+    json.dump(all_frames, all_frames_file)
