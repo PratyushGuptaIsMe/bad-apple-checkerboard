@@ -1,10 +1,6 @@
 from PIL import Image
 
 
-total_frames = 3087 + 1 # offset
-all_frames = []
-
-
 def get_all_frames():
     try:
         for i in range(total_frames):
@@ -35,6 +31,11 @@ def frames_int_to_bool():
                 print("The image is not black and white ONLY.")
 
 
+
+total_frames = 3087 + 1 # offset
+all_frames = []
+
 get_all_frames()
 frames_int_to_bool()
+
 print(all_frames)
