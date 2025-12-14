@@ -1,12 +1,13 @@
 from PIL import Image
 import json
 
+
 def get_all_frames():
     try:
         for i in range(total_frames):
             i_str = str(i)
             frame_number = (5-len(i_str)) * "0" + i_str
-            frame = Image.open(f"../8x8-bad-apple/frame_{frame_number}.png")
+            frame = Image.open(f"../{folder}/frame_{frame_number}.png")
             
             frame = frame.rotate(90)
             
@@ -15,7 +16,7 @@ def get_all_frames():
             res_divider = 60
             for x in range(int(width / res_divider)):
                 for y in range(int(height / res_divider)):
-                    current_frame.append(frame.getpixel((x*res_divider,y*res_divider)))
+                    current_frame.append(frame.getpixel((x * res_divider, y * res_divider)))
             all_frames.append(current_frame)
     except FileNotFoundError:
         print("File path not found. Please edit your settings or smth.")
@@ -38,7 +39,10 @@ def frames_int_to_bool():
 total_frames = 3087 + 1   # offset
 all_frames = []
 
+folder = "8x8-bad-apple"
+project_name = "all_frames"
+
 get_all_frames()
 
-with open("../all_frames.json", "w") as all_frames_file:
+with open(f"../projects/{project_name}.json", "w") as all_frames_file:
     json.dump(all_frames, all_frames_file)

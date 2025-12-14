@@ -2,13 +2,14 @@
 let allFrames; // get all frames array from python here
 let currentFrameIndex = 0; //index of all_frames displayed
 
-fetch("all_frames.json").then(async (response) =>  {
+fetch("projects/all_frames.json").then(async (response) =>  {
     await response.json().then((jsonValue) => {
         allFrames = jsonValue;
         console.log(allFrames)
         MAIN();
     })
 })
+
 let board = document.getElementById("board")
 let boardSquares = board.querySelectorAll(".square")
 let allCurrentPieces = [];
@@ -32,11 +33,11 @@ function drawCheckers(){
         else if(currentFrame[index] == 255){
             color = "black"
         }
-        p = document.createElement("div")
-        p.classList.add("piece")
-        p.classList.add(color)
-        square.appendChild(p)
-        allCurrentPieces.push(p)
+        piece = document.createElement("div")
+        piece.classList.add("piece")
+        piece.classList.add(color)
+        square.appendChild(piece)
+        allCurrentPieces.push(piece)
     }
 }
 
