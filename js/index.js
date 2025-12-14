@@ -1,10 +1,17 @@
 let allFrames; // get all frames array from python here
 let currentFrameIndex = 0; //index of all_frames displayed
 
+let playBtn = document.getElementById("playBtn")
+let playBtnState1 = "Play";
+let playBtnState2 = "Pause";
+let rewindTo0Btn = document.getElementById("backToBeginningBtn")
+let currentFrameCounter = document.getElementById("currentFrameCounter")
+let playing = false;
+
+
 fetch("projects/all_frames.json").then(async (response) =>  {
     await response.json().then((jsonValue) => {
         allFrames = jsonValue;
-        console.log(allFrames)
         MAIN();
     })
 })
@@ -14,10 +21,33 @@ let boardSquares = board.querySelectorAll(".square")
 let allCurrentPieces = [];
 
 function MAIN(){
+    rewindTo0Btn.addEventListener("click", () => {
+        currentFrameIndex = 0;
+        updateFrameCounter()
+    })
+    playBtn.addEventListener("click", () => {
+        playing = !playing;
+        updatePlayBtnState()
+    })
     setInterval(() => {
-        draw()
-        currentFrameIndex++;
+        draw();
+        if(playing){
+            currentFrameIndex++;
+            updateFrameCounter();
+        }
     }, 70) //14FPS
+}
+
+function updateFrameCounter(){
+    currentFrameCounter.textContent = "Current frame: " + currentFrameIndex;
+}
+
+function updatePlayBtnState(){
+    if(playBtn.textContent == playBtnState1){
+        playBtn.textContent = playBtnState2;
+    }else if(playBtn.textContent == playBtnState2){
+        playBtn.textContent = playBtnState1;
+    }  
 }
 
 function draw(){
