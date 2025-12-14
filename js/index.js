@@ -1,4 +1,3 @@
-
 let allFrames; // get all frames array from python here
 let currentFrameIndex = 0; //index of all_frames displayed
 
@@ -16,10 +15,14 @@ let allCurrentPieces = [];
 
 function MAIN(){
     setInterval(() => {
-        removeCheckers()
-        drawCheckers()
+        draw()
         currentFrameIndex++;
-    }, 200)
+    }, 70) //14FPS
+}
+
+function draw(){
+    removeCheckers()
+    drawCheckers()
 }
 
 function drawCheckers(){

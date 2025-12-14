@@ -45,4 +45,4 @@ project_name = "all_frames"
 get_all_frames()
 
 with open(f"../projects/{project_name}.json", "w") as all_frames_file:
-    json.dump(all_frames, all_frames_file)
+    json.dump(all_frames, all_frames_file)   # dump json into .json 
