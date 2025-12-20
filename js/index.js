@@ -7,6 +7,7 @@ let playBtnState2 = "Pause";
 let rewindTo0Btn = document.getElementById("backToBeginningBtn")
 let currentFrameCounter = document.getElementById("currentFrameCounter")
 let playing = false;
+let playViewer = document.getElementById("playingOrNotViewer");
 
 
 fetch("projects/all_frames.json").then(async (response) =>  {
@@ -27,7 +28,8 @@ function MAIN(){
     })
     playBtn.addEventListener("click", () => {
         playing = !playing;
-        updatePlayBtnState()
+        updatePlayBtnState();
+        updatePlayViewer();
     })
     setInterval(() => {
         draw();
@@ -35,7 +37,15 @@ function MAIN(){
             currentFrameIndex++;
             updateFrameCounter();
         }
-    }, 70) //14FPS
+    }, 70) // 14FPS
+}
+
+function updatePlayViewer(){
+    if(playing === false){
+        playViewer.textContent = "Not Playing";
+    }else if(playing === true){
+        playViewer.textContent = "Playing";
+    }
 }
 
 function updateFrameCounter(){
