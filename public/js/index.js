@@ -9,13 +9,17 @@ let currentFrameCounter = document.getElementById("currentFrameCounter")
 let playing = false;
 let playViewer = document.getElementById("playingOrNotViewer");
 
-
-fetch("projects/all_frames.json").then(async (response) =>  {
-    await response.json().then((jsonValue) => {
-        allFrames = jsonValue;
-        MAIN();
+try{
+    fetch("all_frames.json").then(async (response) =>  {
+        await response.json().then((jsonValue) => {
+           allFrames = jsonValue;
+           MAIN();
+        })
     })
-})
+}catch(e){
+    console.error(e)
+}
+
 
 let board = document.getElementById("board")
 let boardSquares = board.querySelectorAll(".square")

@@ -1,0 +1,26 @@
+{
+  "name": "bad-apple-checkerboard",
+  "version": "1.0.0",
+  "description": "Trying to create my own version of bad apple on a checkerboard",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PratyushGuptaIsMe/bad-apple-checkerboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/PratyushGuptaIsMe/bad-apple-checkerboard/issues"
+  },
+  "homepage": "https://github.com/PratyushGuptaIsMe/bad-apple-checkerboard#readme",
+  "dependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
