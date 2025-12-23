@@ -2,10 +2,11 @@ const http = require("http")
 const path = require("path");
 const fs = require("fs")
 const root = __dirname;
+const PORT = process.env.PORT || 3000
 
 const server = http.createServer(main)
 
-server.listen(3000)
+server.listen(PORT, () => console.log("Listening on port " + PORT))
 
 async function main(req, res){
     if(req.url === '/' || req.url === '/index.html'){
