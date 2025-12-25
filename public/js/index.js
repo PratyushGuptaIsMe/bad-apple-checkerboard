@@ -24,7 +24,6 @@ try{
 
 let board = document.getElementById("board")
 let boardSquares = board.querySelectorAll(".square")
-let allCurrentPieces = [];
 
 function MAIN(){
     rewindTo0Btn.addEventListener("click", () => {
@@ -74,31 +73,27 @@ function updatePlayBtnState(){
 }
 
 function draw(){
-    removeCheckers()
     drawCheckers()
 }
 
 function drawCheckers(){
     currentFrame = allFrames[currentFrameIndex];
-    let color;
     for (let index = 0; index < boardSquares.length; index++) {
         const square = boardSquares[index];
-        if(currentFrame[index] == 0){
-            color = "red";
-        }
-        else if(currentFrame[index] == 255){
-            color = "black"
-        }
-        piece = document.createElement("div")
-        piece.classList.add("piece")
-        piece.classList.add(color)
-        square.appendChild(piece)
-        allCurrentPieces.push(piece)
-    }
-}
+        let elements = square.querySelectorAll("*");
 
-function removeCheckers(){
-    allCurrentPieces.forEach(element => {
-        element.remove()
-    });
+        if(elements.length > 1){
+            throw new Error(`Square ${index} has too many nested elements/pices`)
+        }
+
+        piece = elements[0];
+
+        if(currentFrame[index] == 0 && piece.classList.contains("black")){
+            piece.classList.remove("black")
+            piece.classList.add("red")
+        } else if(currentFrame[index] == 255 && piece.classList.contains("red")){
+            piece.classList.remove("red")
+            piece.classList.add("black")
+        }
+    }
 }
