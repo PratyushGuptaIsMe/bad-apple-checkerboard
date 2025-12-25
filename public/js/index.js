@@ -9,6 +9,8 @@ let rewindTo0Btn = document.getElementById("backToBeginningBtn")
 let currentFrameCounter = document.getElementById("currentFrameCounter")
 let playing = false;
 let playViewer = document.getElementById("playingOrNotViewer");
+let board = document.getElementById("board")
+let boardSquares = board.querySelectorAll(".square")
 
 try{
     fetch("bad_apple.json").then(async (response) =>  {
@@ -21,11 +23,9 @@ try{
     console.error(e)
 }
 
-
-let board = document.getElementById("board")
-let boardSquares = board.querySelectorAll(".square")
-
 function MAIN(){
+    addPieces()
+
     rewindTo0Btn.addEventListener("click", () => {
         currentFrameIndex = 0;
         updateFrameCounter()
@@ -39,6 +39,29 @@ function MAIN(){
     animationLoopStart()
 }
 
+function draw(){
+    let currentFrame = allFrames[currentFrameIndex];
+
+    for (let index = 0; index < boardSquares.length; index++) {
+        const square = boardSquares[index];
+        let elements = square.querySelectorAll("*");
+
+        if(elements.length > 1){
+            throw new Error(`Square ${index} has too many nested elements/pieces`)
+        }
+
+        let piece = elements[0];
+
+        if(currentFrame[index] == 0 && piece.classList.contains("black")){
+            piece.classList.remove("black")
+            piece.classList.add("red")
+        } else if(currentFrame[index] == 255 && piece.classList.contains("red")){
+            piece.classList.remove("red")
+            piece.classList.add("black")
+        }
+    }
+}
+
 function animationLoopStart(){
     // NEED TO RUN IT AT 30 FPS
     alternatingVar++;
@@ -50,6 +73,19 @@ function animationLoopStart(){
         updateFrameCounter();
     }
     requestAnimationFrame(animationLoopStart)
+}
+
+function addPieces(){
+    color = "red"
+
+    for (let index = 0; index < boardSquares.length; index++) {
+        square = boardSquares[index];
+        
+        piece = document.createElement("div");
+        piece.classList.add("piece")
+        piece.classList.add(color)
+        square.appendChild(piece)
+    }
 }
 
 function updatePlayViewer(){
@@ -70,30 +106,4 @@ function updatePlayBtnState(){
     }else if(playBtn.textContent == playBtnState2){
         playBtn.textContent = playBtnState1;
     }  
-}
-
-function draw(){
-    drawCheckers()
-}
-
-function drawCheckers(){
-    currentFrame = allFrames[currentFrameIndex];
-    for (let index = 0; index < boardSquares.length; index++) {
-        const square = boardSquares[index];
-        let elements = square.querySelectorAll("*");
-
-        if(elements.length > 1){
-            throw new Error(`Square ${index} has too many nested elements/pices`)
-        }
-
-        piece = elements[0];
-
-        if(currentFrame[index] == 0 && piece.classList.contains("black")){
-            piece.classList.remove("black")
-            piece.classList.add("red")
-        } else if(currentFrame[index] == 255 && piece.classList.contains("red")){
-            piece.classList.remove("red")
-            piece.classList.add("black")
-        }
-    }
 }
