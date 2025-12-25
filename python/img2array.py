@@ -5,6 +5,12 @@ import json
 def get_all_frames():
     try:
         for i in range(1, total_frames):
+            #remove this later if you need to 
+            #skip 30 frames to help remove whitescreen at start
+            if(i < 30):
+                continue
+            #
+
             if(len(str(i)) == 1):
                 i = "00" + str(i)
             elif(len(str(i)) == 2):

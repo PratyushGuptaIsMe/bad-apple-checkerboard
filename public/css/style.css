@@ -8,6 +8,12 @@ body {
     background: #ffffff;
 }
 
+iframe {
+    display: block;
+    width: 560px;
+    height: 315px;
+}
+
 .checkers-board {
     margin: 0;
     height: 100vh;
@@ -23,20 +29,16 @@ body {
     border-radius: 20px;
     padding: 4%;
     padding: 1.5rem;
-    margin: 0.3rem;
+    grid-column: 1;
+    grid-row: 1;
 }
 
 .cntrls button {
     border: none;
     padding: 1.5%;
-
     border-radius: 3px;
     outline: none;
-    background-color:#8b0000;
-}
-
-.iframe-yt {
-    float:left;
+    background-color: #8b0000;
 }
 
 .main {
@@ -48,20 +50,10 @@ body {
     padding: 1rem;
     box-sizing: border-box;
 }
-.cntrls {
-    grid-column: 1;
-    grid-row: 1;
-}
-
-.iframe-yt {
-    grid-column: 1;
-    grid-row: 2;
-}
 
 .checkers-board {
     grid-column: 2;
     grid-row: 1 / span 2;
-
     display: grid;
     place-items: center;
 }
@@ -73,16 +65,13 @@ body {
     border-radius: 12px;
 }
 
-
-iframe {
-    display: block !important;
-    width: 560px;
-    height: 315px;
-    background: red;
-    border: 5px solid red;
+.yt-video {
+    float: left;
 }
 
-
+#yt-video {
+    pointer-events: none;
+}
 
 .board {
     display: grid;
@@ -127,4 +116,8 @@ iframe {
 
 .black {
     background: radial-gradient(circle at top, #555, #000);
+}
+
+.displaynone {
+    display: none !important;
 }
