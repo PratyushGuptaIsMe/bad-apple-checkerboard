@@ -1,6 +1,7 @@
 let allFrames; // get all frames array from python here
 let currentFrameIndex = 0; //index of all_frames displayed
 
+let alternatingVar = 0;
 let playBtn = document.getElementById("playBtn")
 let playBtnState1 = "Play";
 let playBtnState2 = "Pause";
@@ -35,13 +36,21 @@ function MAIN(){
         updatePlayBtnState();
         updatePlayViewer();
     })
-    setInterval(() => {
-        draw();
-        if(playing){
+
+    animationLoopStart()
+}
+
+function animationLoopStart(){
+    // NEED TO RUN IT AT 30 FPS
+    alternatingVar++;
+    if(playing){
+        draw()
+        if(alternatingVar % 2 === 1){
             currentFrameIndex++;
-            updateFrameCounter();
         }
-    }, 70) // 14FPS
+        updateFrameCounter();
+    }
+    requestAnimationFrame(animationLoopStart)
 }
 
 function updatePlayViewer(){

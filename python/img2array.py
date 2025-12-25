@@ -4,20 +4,29 @@ import json
 
 def get_all_frames():
     try:
-        for i in range(total_frames):
-            i_str = str(i)
-            frame_number = (5-len(i_str)) * "0" + i_str
-            frame = Image.open(f"../{folder}/frame_{frame_number}.png")
-            
-            frame = frame.rotate(90)
-            
-            width, height = frame.size
-            current_frame = []
-            res_divider = 60
-            for x in range(int(width / res_divider)):
-                for y in range(int(height / res_divider)):
-                    current_frame.append(frame.getpixel((x * res_divider, y * res_divider)))
-            all_frames.append(current_frame)
+        for i in range(1, total_frames):
+            if(len(str(i)) == 1):
+                i = "00" + str(i)
+            elif(len(str(i)) == 2):
+                i = "0" + str(i)
+            elif(len(str(i)) == 3):
+                i = str(i)
+            elif(len(str(i)) == 4):
+                i = str(i)
+            else:
+                print("Unintended.")
+                exit(1)
+                return
+
+            print(i)
+            frame = Image.open(f"../{folder}/bad_apple_{i}.png")
+            frame = frame.convert("L")
+
+            frame = frame.resize((8, 8), Image.NEAREST)  
+            pixels = frame.getdata()
+            all_frames.append(list(pixels))
+
+
     except FileNotFoundError:
         print("File path not found. Please edit your settings or smth.")
     except:
@@ -36,11 +45,11 @@ def frames_int_to_bool():
 
 
 
-total_frames = 3087 + 1   # offset
+total_frames = 6562   # offset
 all_frames = []
 
-folder = "8x8-bad-apple"
-project_name = "all_frames"
+folder = "bad-apple"
+project_name = "bad_apple"
 
 get_all_frames()
 
