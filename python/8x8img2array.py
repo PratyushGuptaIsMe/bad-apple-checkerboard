@@ -40,7 +40,7 @@ total_frames = 6571 + 1   # offset
 all_frames = []
 
 folder = "8x8"
-project_name = "all_frames"
+project_name = "bad_apple_buggy"
 
 get_all_frames()
 

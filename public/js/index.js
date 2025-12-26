@@ -153,7 +153,7 @@ function log(arg){
 
 
 try{
-    fetch("all_frames.json").then(async (response) =>  {
+    fetch("bad_apple_buggy.json").then(async (response) =>  {
         await response.json().then((jsonValue) => {
            allFrames = jsonValue;
            MAIN();
