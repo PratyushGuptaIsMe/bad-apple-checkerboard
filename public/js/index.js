@@ -1,5 +1,6 @@
 let allFrames; // get all frames array from python here
 let currentFrameIndex = 0; // index of all_frames displayed
+let player;
 let videoPlayer;
 
 let alternatingVar = 0;
@@ -27,14 +28,17 @@ try{
 function MAIN(){
     addPieces()
     mountYoutubePlayer()
+
     rewindTo0Btn.addEventListener("click", () => {
         currentFrameIndex = 0;
+        rewindVideo();
         updateFrameCounter()
     })
     playBtn.addEventListener("click", () => {
         playing = !playing;
         updatePlayBtnState();
         updatePlayViewer();
+        updateVideoPlayer();
     })
 
     animationLoopStart()
@@ -109,8 +113,20 @@ function updatePlayBtnState(){
     }  
 }
 
+function rewindVideo(){
+    videoPlayer.seekTo(0)
+}
+
+function updateVideoPlayer(){
+    if(playing){
+        videoPlayer.playVideo()
+    }else if(!playing){
+        videoPlayer.pauseVideo();
+    }
+}
+
 function onYouTubeIframeAPIReady() {
-    videoPlayer = new YT.Player("yt-video", {
+    player = new YT.Player("yt-video", {
         width: 560,
         height: 315,
         videoId: "FtutLA63Cp8",
@@ -121,11 +137,17 @@ function onYouTubeIframeAPIReady() {
             origin: window.location.origin,
         },
         events: {
-            onReady: () => log("Youtube player mounted"),
+            onReady: onPlayerMounted,
             onError: (e) => console.error("Youtube ERROR: ", e.data)
         }
     });
 };
+
+function onPlayerMounted(event){
+    videoPlayer = event.target;
+
+    log("Youtube player mounted")
+}
 
 function mountYoutubePlayer(){
     if(YT.Player){
