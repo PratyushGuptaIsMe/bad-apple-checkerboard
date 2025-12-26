@@ -14,16 +14,6 @@ let playViewer = document.getElementById("playingOrNotViewer");
 let board = document.getElementById("board")
 let boardSquares = board.querySelectorAll(".square")
 
-try{
-    fetch("bad_apple.json").then(async (response) =>  {
-        await response.json().then((jsonValue) => {
-           allFrames = jsonValue;
-           MAIN();
-        })
-    })
-}catch(e){
-    console.error(e)
-}
 
 function MAIN(){
     addPieces()
@@ -114,7 +104,7 @@ function updatePlayBtnState(){
 }
 
 function rewindVideo(){
-    videoPlayer.seekTo(0)
+    videoPlayer.seekTo(0);
 }
 
 function updateVideoPlayer(){
@@ -141,7 +131,7 @@ function onYouTubeIframeAPIReady() {
             onError: (e) => console.error("Youtube ERROR: ", e.data)
         }
     });
-};
+}
 
 function onPlayerMounted(event){
     videoPlayer = event.target;
@@ -159,4 +149,16 @@ function mountYoutubePlayer(){
 
 function log(arg){
     console.log(arg)
+}
+
+
+try{
+    fetch("all_frames.json").then(async (response) =>  {
+        await response.json().then((jsonValue) => {
+           allFrames = jsonValue;
+           MAIN();
+        })
+    })
+}catch(e){
+    console.error(e);
 }
