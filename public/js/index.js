@@ -1,5 +1,6 @@
 let allFrames; // get all frames array from python here
-let currentFrameIndex = 0; //index of all_frames displayed
+let currentFrameIndex = 0; // index of all_frames displayed
+let videoPlayer;
 
 let alternatingVar = 0;
 let playBtn = document.getElementById("playBtn")
@@ -25,7 +26,7 @@ try{
 
 function MAIN(){
     addPieces()
-
+    mountYoutubePlayer()
     rewindTo0Btn.addEventListener("click", () => {
         currentFrameIndex = 0;
         updateFrameCounter()
@@ -106,4 +107,34 @@ function updatePlayBtnState(){
     }else if(playBtn.textContent == playBtnState2){
         playBtn.textContent = playBtnState1;
     }  
+}
+
+function onYouTubeIframeAPIReady() {
+    videoPlayer = new YT.Player("yt-video", {
+        width: 560,
+        height: 315,
+        videoId: "FtutLA63Cp8",
+        playerVars: {
+            controls: 0,
+            modestbranding: 1,
+            rel: 0,
+            origin: window.location.origin,
+        },
+        events: {
+            onReady: () => log("Youtube player mounted"),
+            onError: (e) => console.error("Youtube ERROR: ", e.data)
+        }
+    });
+};
+
+function mountYoutubePlayer(){
+    if(YT.Player){
+        onYouTubeIframeAPIReady()
+    }else{
+        log("Youtube player still loading...")
+    }
+}
+
+function log(arg){
+    console.log(arg)
 }

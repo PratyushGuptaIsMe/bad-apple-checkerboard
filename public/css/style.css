@@ -8,7 +8,7 @@ body {
     background: #ffffff;
 }
 
-iframe {
+.yt-video {
     display: block;
     width: 560px;
     height: 315px;
@@ -27,6 +27,7 @@ iframe {
     background: #4d4040;
     float: left;
     border-radius: 20px;
+    margin-top: 1.7rem;
     padding: 4%;
     padding: 1.5rem;
     grid-column: 1;
