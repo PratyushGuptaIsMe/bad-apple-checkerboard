@@ -2,6 +2,7 @@ let fps = 30;
 
 let allFrames; // get all frames array from python here
 let currentFrameIndex = 0; // index of all_frames displayed
+let frameCount = 6500; //estimated
 let player;
 let videoPlayer;
 
@@ -30,10 +31,13 @@ function MAIN(){
 
     rewindTo0Btn.addEventListener("click", () => {
         currentFrameIndex = 0;
+        animation.timer = 0;
         playing = false;
         draw()
         rewindVideo();
         updateFrameCounter()
+        updatePlayViewer()
+        updatePlayBtnState()
     })
     playBtn.addEventListener("click", () => {
         playing = !playing;
@@ -45,23 +49,32 @@ function MAIN(){
     requestAnimationFrame(animationLoopStart);
 }
 
-function animationLoopStart(t){
-    animation.deltatime = t-animation.lasttimestamp
-    animation.lasttimestamp=t
-    if(animation.timer>=animation.fpsInterval){
-        animation.timer-=animation.fpsInterval;
+function animationLoopStart(timestamp){
+    animation.deltatime = timestamp - animation.lasttimestamp
+    animation.lasttimestamp = timestamp
+    animation.timer += animation.deltatime
+
+    if(animation.timer >= animation.fpsInterval){
+        animation.timer -= animation.fpsInterval;
         if(playing){
             draw()
             incrementFrames()
             updateFrameCounter();
         }
     }
-    animation.timer+=animation.deltatime
 
     requestAnimationFrame(animationLoopStart)
 }
 
 function draw(){
+    if(currentFrameIndex >= frameCount - 1){
+        currentFrameIndex = frameCount - 1;
+        playing = false;
+        updatePlayBtnState();
+        updatePlayViewer();
+        updateVideoPlayer();
+    }
+
     let currentFrame = allFrames[currentFrameIndex];
 
     for (let index = 0; index < boardSquares.length; index++) {
@@ -115,11 +128,11 @@ function updateFrameCounter(){
 }
 
 function updatePlayBtnState(){
-    if(playBtn.textContent == playBtnState1){
+    if(playing === true){
         playBtn.textContent = playBtnState2;
-    }else if(playBtn.textContent == playBtnState2){
+    }else if(playing === false){
         playBtn.textContent = playBtnState1;
-    }  
+    }
 }
 
 
@@ -170,6 +183,7 @@ fetch("bad_apple.json")
 .then(async (response) =>  {
     await response.json().then((jsonValue) => {
        allFrames = jsonValue;
+       frameCount = allFrames.length;
        MAIN();
     })
 })
