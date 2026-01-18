@@ -1,9 +1,10 @@
+let fps = 30;
+
 let allFrames; // get all frames array from python here
 let currentFrameIndex = 0; // index of all_frames displayed
 let player;
 let videoPlayer;
 
-let alternatingVar = 0;
 let playBtn = document.getElementById("playBtn")
 let playBtnState1 = "Play";
 let playBtnState2 = "Pause";
@@ -14,6 +15,14 @@ let playViewer = document.getElementById("playingOrNotViewer");
 let board = document.getElementById("board")
 let boardSquares = board.querySelectorAll(".square")
 
+let animation = {
+    fps: fps,
+    fpsInterval: 1000 / fps,
+    deltatime: 0,
+    timer: 0,
+    lasttimestamp: 0,
+}
+
 
 function MAIN(){
     addPieces()
@@ -21,6 +30,8 @@ function MAIN(){
 
     rewindTo0Btn.addEventListener("click", () => {
         currentFrameIndex = 0;
+        playing = false;
+        draw()
         rewindVideo();
         updateFrameCounter()
     })
@@ -31,7 +42,23 @@ function MAIN(){
         updateVideoPlayer();
     })
 
-    animationLoopStart()
+    requestAnimationFrame(animationLoopStart);
+}
+
+function animationLoopStart(t){
+    animation.deltatime = t-animation.lasttimestamp
+    animation.lasttimestamp=t
+    if(animation.timer>=animation.fpsInterval){
+        animation.timer-=animation.fpsInterval;
+        if(playing){
+            draw()
+            incrementFrames()
+            updateFrameCounter();
+        }
+    }
+    animation.timer+=animation.deltatime
+
+    requestAnimationFrame(animationLoopStart)
 }
 
 function draw(){
@@ -57,30 +84,22 @@ function draw(){
     }
 }
 
-function animationLoopStart(){
-    // NEED TO RUN IT AT 30 FPS
-    alternatingVar++;
-    if(playing){
-        draw()
-        if(alternatingVar % 2 === 1){
-            currentFrameIndex++;
-        }
-        updateFrameCounter();
-    }
-    requestAnimationFrame(animationLoopStart)
-}
-
 function addPieces(){
-    color = "red"
+    let color = "red"
 
     for (let index = 0; index < boardSquares.length; index++) {
-        square = boardSquares[index];
+        let square = boardSquares[index];
         
-        piece = document.createElement("div");
+        let piece = document.createElement("div");
         piece.classList.add("piece")
         piece.classList.add(color)
         square.appendChild(piece)
     }
+}
+
+
+function incrementFrames(){
+    currentFrameIndex++;
 }
 
 function updatePlayViewer(){
@@ -102,6 +121,7 @@ function updatePlayBtnState(){
         playBtn.textContent = playBtnState1;
     }  
 }
+
 
 function rewindVideo(){
     videoPlayer.seekTo(0);
@@ -135,30 +155,22 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerMounted(event){
     videoPlayer = event.target;
-
-    log("Youtube player mounted")
+    console.log("Youtube player mounted")
 }
 
 function mountYoutubePlayer(){
     if(YT.Player){
         onYouTubeIframeAPIReady()
     }else{
-        log("Youtube player still loading...")
+        console.log("Youtube player still loading...")
     }
 }
 
-function log(arg){
-    console.log(arg)
-}
-
-
-try{
-    fetch("bad_apple_buggy.json").then(async (response) =>  {
-        await response.json().then((jsonValue) => {
-           allFrames = jsonValue;
-           MAIN();
-        })
+fetch("bad_apple.json").then(async (response) =>  {
+    await response.json().then((jsonValue) => {
+       allFrames = jsonValue;
+       MAIN();
     })
-}catch(e){
-    console.error(e);
-}
+}).catch((error) => {
+    console.error("Fetch error: " + error)
+})
