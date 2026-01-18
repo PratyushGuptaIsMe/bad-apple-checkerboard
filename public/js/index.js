@@ -166,11 +166,13 @@ function mountYoutubePlayer(){
     }
 }
 
-fetch("bad_apple.json").then(async (response) =>  {
+fetch("bad_apple.json")
+.then(async (response) =>  {
     await response.json().then((jsonValue) => {
        allFrames = jsonValue;
        MAIN();
     })
-}).catch((error) => {
+})
+.catch((error) => {
     console.error("Fetch error: " + error)
 })
