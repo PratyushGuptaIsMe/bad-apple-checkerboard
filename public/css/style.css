@@ -4,31 +4,27 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
     background: #ffffff;
 }
 
-.yt-video {
-    display: block;
-    width: 560px;
-    height: 315px;
-}
-
-.checkers-board {
-    margin: 0;
-    height: 100vh;
+.main {
     display: grid;
-    place-items: center;
-    font-family: sans-serif;
-    float: right;
+    grid-template-columns: 360px 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 1rem;
+    height: 100vh;
+    padding: 1rem;
 }
 
 .cntrls {
     background: #4d4040;
-    float: left;
     border-radius: 20px;
     margin-top: 1.7rem;
-    padding: 4%;
     padding: 1.5rem;
     grid-column: 1;
     grid-row: 1;
@@ -42,47 +38,39 @@ body {
     background-color: #8b0000;
 }
 
-.main {
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    grid-template-rows: auto 1fr;
-    gap: 1rem;
-    height: 100vh;
-    padding: 1rem;
-    box-sizing: border-box;
+.iframe-yt {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.yt-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+#yt-video {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
 
 .checkers-board {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
     display: grid;
     place-items: center;
-}
-
-.yt-video {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    border-radius: 12px;
-}
-
-.yt-video {
-    float: left;
-}
-
-#yt-video {
-    pointer-events: none;
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    width: 480px;
-    height: 480px;
-    border-radius: 12px;
+    width: min(75vh, 720px);
+    height: min(75vh, 720px);
+    border-radius: 6px;
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.6),
-        inset 0 0 0 10px #5a3a1e;
+        0 18px 40px rgba(0, 0, 0, 0.55),
+        inset 0 0 0 12px #5a3a1e;
     overflow: hidden;
     background: #5a3a1e;
 }
@@ -121,4 +109,13 @@ body {
 
 .displaynone {
     display: none !important;
+}
+
+body > h2 {
+    position: fixed;
+    bottom: 10px;
+    left: 16px;
+    transform: none;
+    font-size: 1.5rem;
+    opacity: 0.9;
 }

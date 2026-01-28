@@ -179,7 +179,7 @@ function mountYoutubePlayer(){
     }
 }
 
-fetch("../../projects/bad_apple.json")
+fetch("/projects/bad_apple.json")
 .then(async (response) =>  {
     await response.json().then((jsonValue) => {
        allFrames = jsonValue;
